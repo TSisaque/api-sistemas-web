@@ -19,12 +19,9 @@ function add_product(product){
             console.log("Um erro aconteceu ao escrever no arquivo.");
             return console.log(err);
         }
-     
-        console.log("Produto adicionado.");
     });
 
 }
-
 
 function delete_product(product_id){
     let rawdata = fs.readFileSync('database.json');
@@ -37,8 +34,28 @@ function delete_product(product_id){
             console.log("Um erro aconteceu ao escrever no arquivo.");
             return console.log(err);
         }
-     
-        console.log("Produto removido.");
+    });
+}
+
+function update_product(product){
+    let rawdata = fs.readFileSync('database.json');
+    let database = JSON.parse(rawdata);
+
+    let up_product = database.products.filter(({ id }) => id === product.id)[0];
+
+    up_product.name = product.name;
+    up_product.price = product.price;
+    up_product.category = product.category;
+
+    delete_product(product.id);
+    database.products.push(up_product);
+
+
+    fs.writeFile("database.json", JSON.stringify(database), 'utf8', function (err) {
+        if (err) {
+            console.log("Um erro aconteceu ao escrever no arquivo.");
+            return console.log(err);
+        }
     });
 
 }
@@ -47,5 +64,6 @@ function delete_product(product_id){
 module.exports = {
     get_products,
     add_product,
-    delete_product
+    delete_product,
+    update_product
 }

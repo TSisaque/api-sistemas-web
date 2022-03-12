@@ -3,9 +3,9 @@ const fs = require('fs');
 
 function get_products() {
     let rawdata = fs.readFileSync('database.json');
-    let products = JSON.parse(rawdata);
+    let database = JSON.parse(rawdata);
 
-    return products;
+    return database.products;
 }
 
 function add_product(product){
@@ -47,9 +47,8 @@ function update_product(product){
     up_product.price = product.price;
     up_product.category = product.category;
 
-    delete_product(product.id);
+    database.products = database.products.filter(({ id }) => id !== product.id);
     database.products.push(up_product);
-
 
     fs.writeFile("database.json", JSON.stringify(database), 'utf8', function (err) {
         if (err) {

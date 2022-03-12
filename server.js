@@ -1,6 +1,6 @@
 const express = require('express');
 const { get_products, add_product, delete_product, update_product } = require('./product_functions.js');
-const { get_categories, add_category, delete_category, update_category,} = require('./product_category_functions.js');
+const { get_categories, add_category, delete_category, update_category,} = require('./category_functions.js');
 
 
 
